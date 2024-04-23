@@ -2,6 +2,7 @@ package backend
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/MQEnergy/go-skeleton/internal/app/service"
@@ -44,6 +45,7 @@ func (s *AuthService) Login(reqParams *user.LoginReq) (fiber.Map, error) {
 	if adminInfo.Status != 1 {
 		return nil, errors.New("用户已锁定，无法登录")
 	}
+	fmt.Println(helper.GeneratePasswordHash(reqParams.Password, adminInfo.Salt))
 	if adminInfo.Password != helper.GeneratePasswordHash(reqParams.Password, adminInfo.Salt) {
 		return nil, errors.New("账号或密码不正确")
 	}

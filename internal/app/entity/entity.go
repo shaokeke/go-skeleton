@@ -2,6 +2,7 @@ package entity
 
 import (
 	"github.com/MQEnergy/go-skeleton/internal/app/entity/admin"
+	"github.com/MQEnergy/go-skeleton/internal/app/entity/article"
 	"github.com/MQEnergy/go-skeleton/pkg/helper"
 )
 
@@ -12,6 +13,10 @@ var methodMaps = MethodMaps{
 	"yfo_admin": {
 		func(Querier) {},
 		func(admin.Querier) {},
+	},
+	"title": {
+		func(Querier) {},
+		func(article.Querier) {},
 	},
 }
 

@@ -16,34 +16,44 @@ import (
 )
 
 var (
-	Q        = new(Query)
-	YfoAdmin *yfoAdmin
+	Q          = new(Query)
+	Article    *article
+	CasbinRule *casbinRule
+	YfoAdmin   *yfoAdmin
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
+	Article = &Q.Article
+	CasbinRule = &Q.CasbinRule
 	YfoAdmin = &Q.YfoAdmin
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:       db,
-		YfoAdmin: newYfoAdmin(db, opts...),
+		db:         db,
+		Article:    newArticle(db, opts...),
+		CasbinRule: newCasbinRule(db, opts...),
+		YfoAdmin:   newYfoAdmin(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	YfoAdmin yfoAdmin
+	Article    article
+	CasbinRule casbinRule
+	YfoAdmin   yfoAdmin
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:       db,
-		YfoAdmin: q.YfoAdmin.clone(db),
+		db:         db,
+		Article:    q.Article.clone(db),
+		CasbinRule: q.CasbinRule.clone(db),
+		YfoAdmin:   q.YfoAdmin.clone(db),
 	}
 }
 
@@ -57,18 +67,24 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:       db,
-		YfoAdmin: q.YfoAdmin.replaceDB(db),
+		db:         db,
+		Article:    q.Article.replaceDB(db),
+		CasbinRule: q.CasbinRule.replaceDB(db),
+		YfoAdmin:   q.YfoAdmin.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	YfoAdmin IYfoAdminDo
+	Article    IArticleDo
+	CasbinRule ICasbinRuleDo
+	YfoAdmin   IYfoAdminDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		YfoAdmin: q.YfoAdmin.WithContext(ctx),
+		Article:    q.Article.WithContext(ctx),
+		CasbinRule: q.CasbinRule.WithContext(ctx),
+		YfoAdmin:   q.YfoAdmin.WithContext(ctx),
 	}
 }
 
