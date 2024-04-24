@@ -10,7 +10,7 @@ import (
 	"github.com/MQEnergy/go-skeleton/internal/app/dao"
 	"github.com/MQEnergy/go-skeleton/internal/app/model"
 
-	"github.com/MQEnergy/go-skeleton/internal/request/user"
+	"github.com/MQEnergy/go-skeleton/internal/request/auth"
 	"github.com/MQEnergy/go-skeleton/internal/vars"
 	"github.com/MQEnergy/go-skeleton/pkg/helper"
 	"github.com/MQEnergy/go-skeleton/pkg/jwtauth"
@@ -31,7 +31,7 @@ var Auth = &AuthService{}
 // @return interface{}
 // @return error
 // @author cx
-func (s *AuthService) Login(reqParams *user.LoginReq) (fiber.Map, error) {
+func (s *AuthService) Login(reqParams *auth.LoginReq) (fiber.Map, error) {
 	var (
 		isSuper   = 0 // 是否超级管理员 1：是 0：不是
 		u         = dao.YfoAdmin
@@ -71,4 +71,9 @@ func (s *AuthService) Login(reqParams *user.LoginReq) (fiber.Map, error) {
 			"is_super": isSuper,
 		},
 	}, nil
+}
+
+func (s *AuthService) Rigster(reqParams *auth.RigsterReq) (fiber.Map, error) {
+
+	return nil, nil
 }

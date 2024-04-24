@@ -52,7 +52,12 @@ func InitCommonGroup(r fiber.Router, handles ...fiber.Handler) {
 		router.Post("/attachment/upload", backend.Attachment.Upload)
 
 		// 登录
-		router.Post("/backend/auth/login", backend.User.Login)
+		router.Post("/backend/auth/login", backend.Auth.Login)
 
+		// 注册
+		router.Post("/backend/auth/rigster", backend.Auth.Rigster)
+
+		// 验证码
+		router.Get("/backend/auth/captcha", backend.Auth.Captcha)
 	}
 }

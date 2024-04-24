@@ -33,6 +33,11 @@ require (
 )
 
 require (
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
+	golang.org/x/image v0.13.0 // indirect
+)
+
+require (
 	github.com/ArtisanCloud/PowerLibs/v3 v3.2.0 // indirect
 	github.com/MicahParks/keyfunc/v2 v2.1.0 // indirect
 	github.com/andybalholm/brotli v1.1.0 // indirect
@@ -65,6 +70,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/microsoft/go-mssqldb v1.6.0 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
+	github.com/mojocn/base64Captcha v1.3.6
 	github.com/ncruces/go-strftime v0.1.9 // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pelletier/go-toml/v2 v2.1.1 // indirect

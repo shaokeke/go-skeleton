@@ -9,6 +9,10 @@ jwt:
   expire: 864000   # token过期时间 单位：s
   issuer: 'go-skeleton'                   #【需修改】
   secret: '3jQSRZXeXzr09hq0GrZuL9Dgtk2XV9Ax' #【需修改】
+captcha:
+  keyLong: 6
+  imgWidth: 240
+  imgHeight: 80
 log:
   level: -4 # 日志级别 debug: -4, info: 0, warn: 4, error: 8
   fileName: 'go-skeleton' # 日志文件名称  【需修改】
@@ -31,7 +35,7 @@ database:
         fileName: 'default-sql' # 日志文件名称 【需修改】
         logLevel: 1 # 日志模式 1:slient 2:error 3:warn 4:info
         prefix: ""
-        master: 'root:654321@tcp(127.0.0.1:3306)/go_skeleton?charset=utf8mb4&parseTime=True&loc=Local' # 主库链接地址【需修改】
+        master: 'root:s503377k@tcp(192.168.3.28:3308)/go_skeleton?charset=utf8mb4&parseTime=True&loc=Local' # 主库链接地址【需修改】
         slave:
           - 'root:123456@tcp(127.0.0.1:3306)/go_skeleton?charset=utf8mb4&parseTime=True&loc=Local' # 从库链接地址  【需修改】
   mongo:
@@ -41,8 +45,8 @@ database:
     maxPoolSize: 20
 redis:
   enabled: true # 是否启用redis
-  host: '127.0.0.1'
-  port: '6379'
+  host: '192.168.3.28'
+  port: '16379'
   password: ''
   dbNum: 0
   prefix: 'go_skeleton:' # 登录用户存入redis键名的前缀
