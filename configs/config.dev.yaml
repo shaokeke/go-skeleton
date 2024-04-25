@@ -45,8 +45,8 @@ database:
     maxPoolSize: 20
 redis:
   enabled: true # 是否启用redis
-  host: '192.168.3.28'
-  port: '16379'
+  host: '127.0.0.1'
+  port: '6379'
   password: ''
   dbNum: 0
   prefix: 'go_skeleton:' # 登录用户存入redis键名的前缀
