@@ -38,6 +38,8 @@ func (s *AuthService) Login(reqParams *auth.LoginReq) (fiber.Map, error) {
 		err       error
 		adminInfo *model.SysUser
 	)
+	// 先验证验证码是否正确
+
 	adminInfo, err = u.GetByUserName(reqParams.UserName)
 	if err != nil {
 		return nil, errors.New("账号或密码不正确")
