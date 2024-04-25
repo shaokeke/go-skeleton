@@ -35,7 +35,7 @@ database:
         fileName: 'default-sql' # 日志文件名称 【需修改】
         logLevel: 1 # 日志模式 1:slient 2:error 3:warn 4:info
         prefix: ""
-        master: 'root:s503377k@tcp(192.168.3.28:3308)/go_skeleton?charset=utf8mb4&parseTime=True&loc=Local' # 主库链接地址【需修改】
+        master: 'root:654321@tcp(127.0.0.1:3306)/go_skeleton?charset=utf8mb4&parseTime=True&loc=Local' # 主库链接地址【需修改】
         slave:
           - 'root:123456@tcp(127.0.0.1:3306)/go_skeleton?charset=utf8mb4&parseTime=True&loc=Local' # 从库链接地址  【需修改】
   mongo:
