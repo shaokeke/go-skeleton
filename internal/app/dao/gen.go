@@ -19,14 +19,14 @@ var (
 	Q          = new(Query)
 	Article    *article
 	CasbinRule *casbinRule
-	YfoAdmin   *yfoAdmin
+	SysUser    *sysUser
 )
 
 func SetDefault(db *gorm.DB, opts ...gen.DOOption) {
 	*Q = *Use(db, opts...)
 	Article = &Q.Article
 	CasbinRule = &Q.CasbinRule
-	YfoAdmin = &Q.YfoAdmin
+	SysUser = &Q.SysUser
 }
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
@@ -34,7 +34,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 		db:         db,
 		Article:    newArticle(db, opts...),
 		CasbinRule: newCasbinRule(db, opts...),
-		YfoAdmin:   newYfoAdmin(db, opts...),
+		SysUser:    newSysUser(db, opts...),
 	}
 }
 
@@ -43,7 +43,7 @@ type Query struct {
 
 	Article    article
 	CasbinRule casbinRule
-	YfoAdmin   yfoAdmin
+	SysUser    sysUser
 }
 
 func (q *Query) Available() bool { return q.db != nil }
@@ -53,7 +53,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 		db:         db,
 		Article:    q.Article.clone(db),
 		CasbinRule: q.CasbinRule.clone(db),
-		YfoAdmin:   q.YfoAdmin.clone(db),
+		SysUser:    q.SysUser.clone(db),
 	}
 }
 
@@ -70,21 +70,21 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 		db:         db,
 		Article:    q.Article.replaceDB(db),
 		CasbinRule: q.CasbinRule.replaceDB(db),
-		YfoAdmin:   q.YfoAdmin.replaceDB(db),
+		SysUser:    q.SysUser.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
 	Article    IArticleDo
 	CasbinRule ICasbinRuleDo
-	YfoAdmin   IYfoAdminDo
+	SysUser    ISysUserDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
 		Article:    q.Article.WithContext(ctx),
 		CasbinRule: q.CasbinRule.WithContext(ctx),
-		YfoAdmin:   q.YfoAdmin.WithContext(ctx),
+		SysUser:    q.SysUser.WithContext(ctx),
 	}
 }
 

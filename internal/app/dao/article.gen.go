@@ -6,6 +6,7 @@ package dao
 
 import (
 	"context"
+	"strings"
 
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
@@ -34,7 +35,7 @@ func newArticle(db *gorm.DB, opts ...gen.DOOption) article {
 	_article.VisitCount = field.NewInt(tableName, "visitCount")
 	_article.CreatedAt = field.NewTime(tableName, "created_at")
 	_article.UpdatedAt = field.NewTime(tableName, "updated_at")
-	_article.DeletedAt = field.NewTime(tableName, "deletedAt")
+	_article.DeletedAt = field.NewField(tableName, "deleted_at")
 
 	_article.fillFieldMap()
 
@@ -52,7 +53,7 @@ type article struct {
 	VisitCount field.Int
 	CreatedAt  field.Time
 	UpdatedAt  field.Time
-	DeletedAt  field.Time
+	DeletedAt  field.Field
 
 	fieldMap map[string]field.Expr
 }
@@ -76,7 +77,7 @@ func (a *article) updateTableName(table string) *article {
 	a.VisitCount = field.NewInt(table, "visitCount")
 	a.CreatedAt = field.NewTime(table, "created_at")
 	a.UpdatedAt = field.NewTime(table, "updated_at")
-	a.DeletedAt = field.NewTime(table, "deletedAt")
+	a.DeletedAt = field.NewField(table, "deleted_at")
 
 	a.fillFieldMap()
 
@@ -101,7 +102,7 @@ func (a *article) fillFieldMap() {
 	a.fieldMap["visitCount"] = a.VisitCount
 	a.fieldMap["created_at"] = a.CreatedAt
 	a.fieldMap["updated_at"] = a.UpdatedAt
-	a.fieldMap["deletedAt"] = a.DeletedAt
+	a.fieldMap["deleted_at"] = a.DeletedAt
 }
 
 func (a article) clone(db *gorm.DB) article {
@@ -175,6 +176,65 @@ type IArticleDo interface {
 	Returning(value interface{}, columns ...string) IArticleDo
 	UnderlyingDB() *gorm.DB
 	schema.Tabler
+
+	GetByID(id int) (result model.Article, err error)
+	FindAll() (result []model.Article, err error)
+	FindOne() (result model.Article)
+	GetByTitle(account string) (result *model.Article, err error)
+}
+
+// SELECT * FROM @@table WHERE id = @id
+func (a articleDo) GetByID(id int) (result model.Article, err error) {
+	var params []interface{}
+
+	var generateSQL strings.Builder
+	params = append(params, id)
+	generateSQL.WriteString("SELECT * FROM article WHERE id = ? ")
+
+	var executeSQL *gorm.DB
+	executeSQL = a.UnderlyingDB().Raw(generateSQL.String(), params...).Take(&result) // ignore_security_alert
+	err = executeSQL.Error
+
+	return
+}
+
+// SELECT * FROM @@table
+func (a articleDo) FindAll() (result []model.Article, err error) {
+	var generateSQL strings.Builder
+	generateSQL.WriteString("SELECT * FROM article ")
+
+	var executeSQL *gorm.DB
+	executeSQL = a.UnderlyingDB().Raw(generateSQL.String()).Find(&result) // ignore_security_alert
+	err = executeSQL.Error
+
+	return
+}
+
+// SELECT * FROM @@table LIMIT 1
+func (a articleDo) FindOne() (result model.Article) {
+	var generateSQL strings.Builder
+	generateSQL.WriteString("SELECT * FROM article LIMIT 1 ")
+
+	var executeSQL *gorm.DB
+	executeSQL = a.UnderlyingDB().Raw(generateSQL.String()).Take(&result) // ignore_security_alert
+	_ = executeSQL
+
+	return
+}
+
+// SELECT * FROM @@table WHERE title = @title
+func (a articleDo) GetByTitle(title string) (result *model.Article, err error) {
+	var params []interface{}
+
+	var generateSQL strings.Builder
+	params = append(params, title)
+	generateSQL.WriteString("SELECT * FROM article WHERE title = ? ")
+
+	var executeSQL *gorm.DB
+	executeSQL = a.UnderlyingDB().Raw(generateSQL.String(), params...).Take(&result) // ignore_security_alert
+	err = executeSQL.Error
+
+	return
 }
 
 func (a articleDo) Debug() IArticleDo {

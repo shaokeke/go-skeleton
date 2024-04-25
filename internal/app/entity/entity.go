@@ -10,11 +10,11 @@ type MethodMaps map[string][]any
 
 // methodMaps 需手动添加配置
 var methodMaps = MethodMaps{
-	"yfo_admin": {
+	"sys_user": {
 		func(Querier) {},
 		func(admin.Querier) {},
 	},
-	"title": {
+	"article": {
 		func(Querier) {},
 		func(article.Querier) {},
 	},

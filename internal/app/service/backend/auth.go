@@ -34,11 +34,11 @@ var Auth = &AuthService{}
 func (s *AuthService) Login(reqParams *auth.LoginReq) (fiber.Map, error) {
 	var (
 		isSuper   = 0 // 是否超级管理员 1：是 0：不是
-		u         = dao.YfoAdmin
+		u         = dao.SysUser
 		err       error
-		adminInfo *model.YfoAdmin
+		adminInfo *model.SysUser
 	)
-	adminInfo, err = u.GetByAccount(reqParams.Account)
+	adminInfo, err = u.GetByUserName(reqParams.UserName)
 	if err != nil {
 		return nil, errors.New("账号或密码不正确")
 	}
@@ -65,7 +65,7 @@ func (s *AuthService) Login(reqParams *auth.LoginReq) (fiber.Map, error) {
 		"info": fiber.Map{
 			"id":       adminInfo.ID,
 			"uuid":     adminInfo.UUID,
-			"account":  adminInfo.Account,
+			"username": adminInfo.Username,
 			"avatar":   adminInfo.Avatar,
 			"role_ids": adminInfo.RoleIds,
 			"is_super": isSuper,

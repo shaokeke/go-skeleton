@@ -6,11 +6,11 @@ type IndexReq struct {
 }
 
 type LoginReq struct {
-	Account  string `form:"account" json:"account" validate:"required"`
+	UserName string `form:"account" json:"account" validate:"required"`
 	Password string `form:"password" json:"password" validate:"required"`
 }
 
 type RigsterReq struct {
-	Account  string `form:"account" json:"account" validate:"required"`
+	UserName string `form:"account" json:"account" validate:"required"`
 	Password string `form:"password" json:"password" validate:"required"`
 }

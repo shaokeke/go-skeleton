@@ -6,20 +6,22 @@ package model
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 const TableNameArticle = "article"
 
 // Article mapped from table <article>
 type Article struct {
-	ID         int        `gorm:"column:id;type:int(11);primaryKey;autoIncrement:true" json:"id"`
-	Title      string     `gorm:"column:title;type:varchar(128);not null" json:"title"`
-	Content    string     `gorm:"column:content;type:text;not null" json:"content"`
-	Path       *string    `gorm:"column:path;type:varchar(50)" json:"path"`
-	VisitCount *int       `gorm:"column:visitCount;type:int(11)" json:"visitCount"`
-	CreatedAt  time.Time  `gorm:"column:created_at;type:datetime(6);not null;default:CURRENT_TIMESTAMP(6)" json:"created_at"`
-	UpdatedAt  time.Time  `gorm:"column:updated_at;type:datetime(6);not null;default:CURRENT_TIMESTAMP(6)" json:"updated_at"`
-	DeletedAt  *time.Time `gorm:"column:deletedAt;type:datetime(6)" json:"deletedAt"`
+	ID         int            `gorm:"column:id;type:int(11);primaryKey;autoIncrement:true" json:"id"`
+	Title      string         `gorm:"column:title;type:varchar(128);not null" json:"title"`
+	Content    string         `gorm:"column:content;type:text;not null" json:"content"`
+	Path       *string        `gorm:"column:path;type:varchar(50)" json:"path"`
+	VisitCount *int           `gorm:"column:visitCount;type:int(11)" json:"visitCount"`
+	CreatedAt  time.Time      `gorm:"column:created_at;type:datetime(6);not null;default:CURRENT_TIMESTAMP(6)" json:"created_at"`
+	UpdatedAt  time.Time      `gorm:"column:updated_at;type:datetime(6);not null;default:CURRENT_TIMESTAMP(6)" json:"updated_at"`
+	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at;type:datetime(6)" json:"deleted_at"`
 }
 
 // TableName Article's table name
