@@ -255,11 +255,11 @@ func (s sysUserDo) FindOne() (result model.SysUser) {
 }
 
 // SELECT * FROM @@table WHERE username = @username
-func (s sysUserDo) GetByUserName(account string) (result *model.SysUser, err error) {
+func (s sysUserDo) GetByUserName(username string) (result *model.SysUser, err error) {
 	var params []interface{}
 
 	var generateSQL strings.Builder
-	params = append(params, account)
+	params = append(params, username)
 	generateSQL.WriteString("SELECT * FROM sys_user WHERE username = ? ")
 
 	var executeSQL *gorm.DB

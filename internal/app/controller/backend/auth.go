@@ -40,11 +40,11 @@ func (c *AuthController) Index(ctx *fiber.Ctx) error {
 // @author cx
 func (c *AuthController) Login(ctx *fiber.Ctx) error {
 	params := &auth.LoginReq{}
-	if !store.Verify(params.CaptchaId, params.Captcha, true) {
-		return response.BadRequestException(ctx, "验证码错误")
-	}
 	if err := c.Validate(ctx, params); err != nil {
 		return response.BadRequestException(ctx, err.Error())
+	}
+	if !store.Verify(params.CaptchaId, params.Captcha, true) {
+		return response.BadRequestException(ctx, "验证码错误")
 	}
 	info, err := backend.Auth.Login(params)
 	if err != nil {
